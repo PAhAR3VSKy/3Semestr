@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Polynomial.h"
-#include<iomanip>
+#include <iomanip>
 
 using namespace std;
 
@@ -23,7 +23,6 @@ int main()
 	cout << setw(17) << "Многочлен K=A-B:" << setw(5) << (A - B) << '\n';
 	cout << setw(17) << "Многочлен Y=A*B:" << setw(5) << (A * B) << '\n';
 	cout << setw(17) << "Многочлен Y=A/B:" << setw(5) << (A / B) << '\n';
-	/*cout << setw(17) << "остаток от деления Y=A/B:" << setw(5) << A.residue() << '\n';*/
 	system("pause");
 	return 0;
 }

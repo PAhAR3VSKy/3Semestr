@@ -7,7 +7,7 @@ public:
 	Polynomial(int degree);//конструктор с параметрами
 	Polynomial(const Polynomial &); //копирования
 	~Polynomial();//деструктор
-	int getDegree(); //функция получения степени полинома
+	int getDegree(); //функция получения степени полинома 
 	double getCoefficientf(int); //функция получения коэффициента при i-й степени
 	Polynomial operator+(const Polynomial &);   //оператор сложения двух полиномов
 	Polynomial operator-(const Polynomial &);   //оператор вычитания двух полиномов

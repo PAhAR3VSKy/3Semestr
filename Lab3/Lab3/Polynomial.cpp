@@ -155,7 +155,7 @@ std::ostream & operator<<(std::ostream & object, const Polynomial & expression)
 			}
 		}
 		object << '\n';
-	}
+	} 
 	else
 		object << 0;
 	return object;
@@ -169,11 +169,4 @@ std::istream & operator>>(std::istream & object, Polynomial & expression)
 	return object;
 }
 
-Polynomial::Polynomial()
-{
-}
 
-
-Polynomial::~Polynomial()
-{
-}
