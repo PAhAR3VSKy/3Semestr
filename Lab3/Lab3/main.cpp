@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Polynomial.h"
-#include <iomanip>
 
 using namespace std;
 
@@ -17,12 +16,22 @@ int main()
 	cin >> A;
 	cout << "Введите коэффициенты полинома B:" << '\n';
 	cin >> B;
-	cout << setw(17) << "Многочлен А:" << setw(5) << A << '\n';
-	cout << setw(17) << "Многочлен B:" << setw(5) << B << '\n';
-	cout << setw(17) << "Многочлен D=A+B:" << setw(5) << (A + B) << '\n';
-	cout << setw(17) << "Многочлен K=A-B:" << setw(5) << (A - B) << '\n';
-	cout << setw(17) << "Многочлен Y=A*B:" << setw(5) << (A * B) << '\n';
-	cout << setw(17) << "Многочлен Y=A/B:" << setw(5) << (A / B) << '\n';
+	cout << " Многочлен А: " << A << '\n';
+	cout << " Многочлен B: " << B << '\n';
+	cout << " Многочлен D=A+B: " << (A + B) << '\n';
+	cout << " Многочлен K=A-B: " << (A - B) << '\n';
+	cout << " Многочлен Y=A*B: " << (A * B) << '\n';
+	cout << " Многочлен Y=A/B: " << (A / B) << '\n';
+	(A < B);
+	cout << endl;
+	if (A.palindrome())
+		cout << " Множество " << A << " является палиндромом!" << endl;
+	else
+		cout << endl << " Множество " << A << " неявляется палиндромом!" << endl;
+	if (B.palindrome())
+		cout << endl << " Множество " << B << " является палиндромом!" << endl;
+	else
+		cout << endl <<" Множество " << B << " неявляется палиндромом!" << endl;
 	system("pause");
 	return 0;
 }

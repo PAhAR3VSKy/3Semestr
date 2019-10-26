@@ -1,4 +1,4 @@
-﻿  main.cpp
-  Polynomial.cpp
-  Создание кода...
-  Lab3.vcxproj -> C:\Users\paharevsky\source\repos\Lab3\Debug\Lab3.exe
+﻿  Polynomial.cpp
+d:\projectgit\3semestr\lab3\lab3\polynomial.cpp(141): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+d:\projectgit\3semestr\lab3\lab3\polynomial.cpp(143): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+  Lab3.vcxproj -> D:\ProjectGit\3Semestr\Lab3\Debug\Lab3.exe

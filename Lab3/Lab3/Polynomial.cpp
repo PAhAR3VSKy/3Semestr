@@ -4,7 +4,7 @@
 
 Polynomial::Polynomial()
 {
-	coefficient = NULL;
+	coefficient = NULL; //полином равный 0
 }
 
 Polynomial::Polynomial(int degree)
@@ -12,7 +12,7 @@ Polynomial::Polynomial(int degree)
 	int i;
 	this->degree = degree;
 	coefficient = new double[degree + 1];
-	for (i = 0; i < degree; i++)
+	for (i = 0; i < degree; i++) // выделение места под коэффициенты
 	{
 		coefficient[i] = 0;
 	}
@@ -22,7 +22,7 @@ Polynomial::Polynomial(const Polynomial &object)
 {
 	degree = object.degree;
 	coefficient = new double[degree + 1];
-	for (int i = 0; i < degree; i++)
+	for (int i = 0; i < degree; i++) // копирование объекта класса
 	{
 		coefficient[i] = object.coefficient[i];
 	}
@@ -49,17 +49,27 @@ double Polynomial::getCoefficientf(int number)
 		return 0.0;
 }
 
+bool Polynomial::palindrome()
+{
+	for (int i = 0; i < degree; i++) // проверка множества на полиндром от 0 до n коэффициента
+	{
+		if (coefficient[i] != coefficient[degree - i - 1])
+			return false;
+	}
+	return true;
+}
+
 Polynomial Polynomial::operator+(const Polynomial &object)
 {
 	int i;
-	if (degree >= object.degree)
+	if (degree >= object.degree) // сложение меньшего объекта с большим Пример: А + В
 	{
 		Polynomial New = *this;
 		for (i = 0; i < degree; i++)
 			New.coefficient[i] = coefficient[i] + object.coefficient[i];
 		return New;
 	}
-	else
+	else // сложение меньшего объекта с большим Пример: В + А
 	{
 		Polynomial New = object;
 		for (i = 0; i < degree; i++)
@@ -72,7 +82,7 @@ Polynomial Polynomial::operator+(const Polynomial &object)
 Polynomial Polynomial::operator-(const Polynomial &object)
 {
 	int i;
-	if (degree >= object.degree)
+	if (degree >= object.degree) // аналогично сложению
 	{
 		Polynomial New = *this;
 		for (i = 0; i < degree; i++)
@@ -117,6 +127,29 @@ Polynomial Polynomial::operator/(const Polynomial &object)
 	std::cout << " Остаток от деления: " << temp << std::endl;
 	return New;
 
+}
+
+void Polynomial::operator<(const Polynomial &object)
+{
+	int sumCoeffThis = 0;
+	int sumCoeffObject = 0;
+	if (degree > object.degree)
+		std::cout << " Множество "<< *this << " больше!" << std::endl;
+	else if (degree == object.degree)
+	{
+		for (int i = 0; i < degree; i++)
+			sumCoeffThis += coefficient[i];
+		for (int i = 0; i < object.degree; i++)
+			sumCoeffObject += object.coefficient[i];
+		if (sumCoeffThis < sumCoeffObject)
+			std::cout << " Множество " << object << " больше!" << std::endl;
+		else if (sumCoeffThis == sumCoeffObject)
+			std::cout << " Множества равны" << std::endl;
+		else
+			std::cout << " Множество " << *this << " больше!" << std::endl;
+	}
+	else
+		std::cout << " Множество " << object << " больше!" << std::endl;
 }
 
 
