@@ -161,6 +161,47 @@ void Polynomial::operator<(const Polynomial &object)
         std::cout << " Множество " << object << " больше!" << std::endl;
 }
 
+QString Polynomial::show(QString Line)
+{
+    QString New;
+    int n = 0;
+    for (int i = 0; i < Line.size(); i+=2)
+    {
+        if(Line.at(i) != 0)
+            n++;
+    }
+    if(n != 0)
+    {
+        if (Line.at(0) != 0)
+        {
+            New = Line.at(0);
+        }
+        for (int i = 1; i < Line.size(); i+=2)
+        {
+            if (Line.at(i) < 0)
+            {
+                if (Line.at(i) != -1)
+                    New += Line.at(i) + 'X^' + QVariant(i).toChar();
+                else
+                    New += '-' + 'X^' + QVariant(i).toChar();
+            }
+            else
+            {
+                if (Line.at(i) != 0)
+                {
+                    if (Line.at(i) != 1)
+                        New += '+' + Line.at(i) + "X^" + QVariant(i).toChar();
+                    else
+                        New += '+' + 'X^' + QVariant(i).toChar();
+                }
+            }
+        }
+        New += '\n';
+    }
+    else
+        New = "";
+    return New;
+}
 
 std::ostream & operator<<(std::ostream & object, const Polynomial & expression)
 {

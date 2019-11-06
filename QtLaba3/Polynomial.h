@@ -6,6 +6,8 @@
 #pragma once
 #include <iostream>
 #include <QString>
+#include <QVariant>
+#include <QMessageBox>
 class Polynomial
 {
 public:
@@ -23,6 +25,7 @@ public:
     Polynomial operator-(const Polynomial &);   //оператор вычитания двух полиномов
     Polynomial operator*(const Polynomial &);   // оператор умножения
     Polynomial operator/(const Polynomial &);   // оператор деления
+    QString show(QString);
     void operator<(const Polynomial &);	// оператор сравнения
     friend std::ostream &operator<< (std::ostream &, const Polynomial &); // перегруженный оператор вывода
     friend std::istream &operator >> (std::istream &s, Polynomial &c); // перегруженный оператор ввода

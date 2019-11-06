@@ -19,7 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete [] mainCoef;
 }
+
+
+
+
 
 
 
@@ -28,9 +33,16 @@ void MainWindow::on_Show_clicked()
 {
     QString StringA = ui->StringA->text();
     Polynomial A(StringA.size()/2);
-    QStringList parts = StringA.split(' ');
-    for (int i = 0;i< StringA.size();i++) {
-        A.setCoefficientf(i, parts[i].toDouble());
+    for (int i = 0, j = 0;i < StringA.size();i+=2, j++) {
+        QString temp = StringA.at(i);
+        A.setCoefficientf(j, temp.toDouble());
     }
-    std::cout << A;
+    QMessageBox::information(this, "m", "");
+    // ui->StringB->setText("123");
+    // QString StringB = ui->StringB->text();
+    // Polynomial A, B;
+    // QMessageBox::warning(this, "m", "3");
+    //QMessageBox::information(0, "m", "3");
 }
+
+

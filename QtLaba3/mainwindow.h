@@ -19,11 +19,11 @@ public:
 
 private slots:
 
-    void on_Show_clicked(Polynomial&StringA, Polynomial&StringB);
-
     void on_Show_clicked();
+
 
 private:
     Ui::MainWindow *ui;
+    double *mainCoef;
 };
 #endif // MAINWINDOW_H
