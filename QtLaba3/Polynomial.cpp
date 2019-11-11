@@ -60,14 +60,22 @@ double Polynomial::getCoefficientf(int number)
         return 0.0;
 }
 
-bool Polynomial::palindrome()
+QString Polynomial::palindrome()
 {
+    QString resultLine;
+    bool result;
     for (int i = 0; i < degree; i++) // проверка множества на полиндром от 0 до n коэффициента
     {
         if (coefficient[i] != coefficient[degree - i - 1])
-            return false;
+            result = false;
+        else
+            result = true;
     }
-    return true;
+    if(result)
+        resultLine = "Множество " + (this->show()) + " является палиндромом";
+    else
+        resultLine = "Множество " + (this->show()) + " не является палиндромом";
+    return resultLine;
 }
 
 Polynomial Polynomial::operator+(const Polynomial &object)
@@ -113,7 +121,7 @@ Polynomial Polynomial::operator-(const Polynomial &object)
 Polynomial Polynomial::operator*(const Polynomial &object)
 {
     int i, j;
-    Polynomial New = degree + object.degree;
+    Polynomial New = degree + object.degree - 1;
     for (i = 0; i < degree; i++)
         for (j = 0; j < object.degree; j++)
             New.coefficient[i + j] += coefficient[i] * object.coefficient[j];
@@ -126,24 +134,43 @@ Polynomial Polynomial::operator/(const Polynomial &object)
     Polynomial temp = *this;
     for (int i = 0; i < New.degree; i++)
     {
-        New.coefficient[New.degree - i - 1] = temp.coefficient[degree - i - 1] / object.coefficient[object.degree - 1];
+        New.coefficient[i] = (int)((abs)(temp.coefficient[i]) / (abs)(object.coefficient[0]));
+        double q = New.coefficient[i];
         for (int j = 0; j < object.degree; j++)
         {
-            temp.coefficient[degree - j - i - 1] -= object.coefficient[object.degree - j - 1] * New.coefficient[New.degree - i - 1];
+            temp.coefficient[j+i] -= (int)(object.coefficient[j] * New.coefficient[i]);
+            double w = temp.coefficient[j+i];
         }
 
     }
-    std::cout << " Остаток от деления: " << temp << std::endl;
+
     return New;
 
 }
 
-void Polynomial::operator<(const Polynomial &object)
+Polynomial Polynomial::operator%(const Polynomial &object)
+{
+    Polynomial temp = *this;
+    Polynomial New = (temp/object);
+    for (int i = 0; i < New.degree; i++)
+    {
+        for (int j = 0; j < object.degree; j++)
+        {
+            temp.coefficient[j+i] -= (int)(object.coefficient[j] * New.coefficient[i]);
+        }
+
+    }
+    return temp;
+
+}
+
+QString Polynomial::operator<(Polynomial &object)
 {
     int sumCoeffThis = 0;
     int sumCoeffObject = 0;
+    QString resultLine;
     if (degree > object.degree)
-        std::cout << " Множество "<< *this << " больше!" << std::endl;
+        resultLine = " Множество " + (this->show()) + " больше!";
     else if (degree == object.degree)
     {
         for (int i = 0; i < degree; i++)
@@ -151,105 +178,95 @@ void Polynomial::operator<(const Polynomial &object)
         for (int i = 0; i < object.degree; i++)
             sumCoeffObject += object.coefficient[i];
         if (sumCoeffThis < sumCoeffObject)
-            std::cout << " Множество " << object << " больше!" << std::endl;
+            resultLine = " Множество " + object.show() + " больше!";
         else if (sumCoeffThis == sumCoeffObject)
-            std::cout << " Множества равны" << std::endl;
+            resultLine = " Множества равны";
         else
-            std::cout << " Множество " << *this << " больше!" << std::endl;
+            resultLine = " Множество " + (this->show()) + " больше!";
     }
     else
-        std::cout << " Множество " << object << " больше!" << std::endl;
+        resultLine = " Множество " + object.show() + " больше!";
+    return resultLine;
 }
 
-QString Polynomial::show(QString Line)
+QString Polynomial::show()
 {
-    QString New;
+    Polynomial NewTemp = * this;
+    QString NewString;
     int n = 0;
-    for (int i = 0; i < Line.size(); i+=2)
+    for (int i = 0; i < NewTemp.degree; i++)
     {
-        if(Line.at(i) != 0)
+        if(NewTemp.getCoefficientf(i) != 0)
             n++;
     }
     if(n != 0)
     {
-        if (Line.at(0) != 0)
+        if (NewTemp.getCoefficientf(0) != 0)
         {
-            New = Line.at(0);
+            if(NewTemp.getCoefficientf(0) != 1)
+                NewString = QString::number(NewTemp.getCoefficientf(0)) + "X^" + QString::number(NewTemp.degree - 1);
+            else
+                NewString =  "X^" + QString::number(NewTemp.degree - 1);
         }
-        for (int i = 1; i < Line.size(); i+=2)
+        for (int i = 1; i < NewTemp.degree; i++)
         {
-            if (Line.at(i) < 0)
+            if (NewTemp.getCoefficientf(i) < 0)
             {
-                if (Line.at(i) != -1)
-                    New += Line.at(i) + 'X^' + QVariant(i).toChar();
+                if(NewTemp.degree - i - 1 == 0)
+                {
+                        NewString += QString::number(NewTemp.getCoefficientf(i));
+                }
                 else
-                    New += '-' + 'X^' + QVariant(i).toChar();
+                {
+                    if (NewTemp.getCoefficientf(i) != -1)
+                        NewString +=  QString::number(NewTemp.getCoefficientf(i)) + "X^" + QString::number(NewTemp.degree - i - 1);
+                    else
+                        NewString += "-X^" + QString::number(NewTemp.degree - i - 1);
+                }
+
             }
             else
-            {
-                if (Line.at(i) != 0)
+            { 
+                if (NewTemp.getCoefficientf(i) != 0)
                 {
-                    if (Line.at(i) != 1)
-                        New += '+' + Line.at(i) + "X^" + QVariant(i).toChar();
+                    if(NewTemp.getCoefficientf(i-1) == 0)
+                    {
+                        if(NewTemp.degree - i - 1 == 0)
+                        {
+                                NewString += QString::number(NewTemp.getCoefficientf(i));
+                        }
+                        else
+                        {
+                             if (NewTemp.getCoefficientf(i) != 1)
+                                 NewString +=  QString::number(NewTemp.getCoefficientf(i)) + "X^" + QString::number(NewTemp.degree - i - 1);
+                             else
+                                 NewString += "X^"  + QString::number(NewTemp.degree - i - 1);
+                        }
+                    }
                     else
-                        New += '+' + 'X^' + QVariant(i).toChar();
+                    {
+                        if(NewTemp.degree - i - 1 == 0)
+                        {
+                                NewString += '+' + QString::number(NewTemp.getCoefficientf(i));
+                        }
+                        else
+                        {
+                             if (NewTemp.getCoefficientf(i) != 1)
+                                 NewString += '+' + QString::number(NewTemp.getCoefficientf(i)) + "X^" + QString::number(NewTemp.degree - i - 1);
+                             else
+                                 NewString += "+X^"  + QString::number(NewTemp.degree - i - 1);
+                        }
+                    }
+
+
                 }
             }
         }
-        New += '\n';
     }
     else
-        New = "";
-    return New;
+        NewString += "";
+    return NewString;
 }
 
-std::ostream & operator<<(std::ostream & object, const Polynomial & expression)
-{
-    int i, n = 0;
-    for (i = 0; i < expression.degree; i++)
-    {
-        if (expression.coefficient[i] != 0)
-            n++;
-    }
-    if (n != 0)
-    {
-        if (expression.coefficient[0] != 0)
-        {
-            object << expression.coefficient[0];
-        }
-        for (i = 1; i < expression.degree; i++)
-        {
-            if (expression.coefficient[i] < 0)
-            {
-                if (expression.coefficient[i] != -1)
-                    object << expression.coefficient[i] << "X^" << i;
-                else
-                    object << "-" << "X^" << i;
-            }
-            else
-            {
-                if (expression.coefficient[i] != 0)
-                {
-                    if (expression.coefficient[i] != 1)
-                        object << "+" << expression.coefficient[i] << "X^" << i;
-                    else
-                        object << "+" << "X^" << i;
-                }
-            }
-        }
-        object << '\n';
-    }
-    else
-        object << 0;
-    return object;
-}
-
-std::istream & operator>>(std::istream & object, Polynomial & expression)
-{
-    int i;
-    for (i = 0; i < expression.degree; i++)
-        object >> expression.coefficient[i];
-    return object;
-}
 
 
