@@ -38,6 +38,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    double *mainCoef;
 };
 #endif // MAINWINDOW_H

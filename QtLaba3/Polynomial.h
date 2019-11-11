@@ -27,7 +27,7 @@ public:
     Polynomial operator/(const Polynomial &);   // оператор деления
     Polynomial operator%(const Polynomial &);   // оператор остатка от деления
     QString show();                             //  функция вывода
-    QString operator<( Polynomial &);         // оператор сравнения
+    QString operator<( Polynomial &);           // оператор сравнения
 private:
     int degree;                                 //степень полинома
     double *coefficient;                        //указатель на массив коэффициентов полинома coefficient[i] - коэффициент при i-й степени

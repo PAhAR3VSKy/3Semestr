@@ -19,26 +19,27 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete [] mainCoef;
 }
 
-
+Polynomial getData(QString String)
+{
+    QStringList ListString = String.split(" ", QString::SkipEmptyParts);
+    Polynomial temp(ListString.size());
+    for (int i = 0; i < ListString.size(); i++) {
+        temp.setCoefficientf(i, ListString.at(i).toDouble());
+    }
+    return temp;
+}
 
 void MainWindow::on_Show_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
+
     QMessageBox::information(this, "result", A.show() + '\n' + B.show());
 
 }
@@ -48,18 +49,11 @@ void MainWindow::on_Show_clicked()
 void MainWindow::on_Sum_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
 
     QMessageBox::information(this, "result", (A+B).show());
 }
@@ -67,18 +61,11 @@ void MainWindow::on_Sum_clicked()
 void MainWindow::on_subtraction_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
 
      QMessageBox::information(this, "result", (A-B).show());
 }
@@ -86,74 +73,48 @@ void MainWindow::on_subtraction_clicked()
 void MainWindow::on_mult_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
-    (A*B).show();
+    Polynomial B = getData(StringB);
+
     QMessageBox::information(this, "result", (A*B).show());
 }
 
 void MainWindow::on_division_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
+
     QMessageBox::information(this, "result", (A/B).show());
 }
 
 void MainWindow::on_remains_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
-    (A%B).show();
+    Polynomial B = getData(StringB);
+
     QMessageBox::information(this, "result", (A%B).show());
 }
 
 void MainWindow::on_comparison_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
+
     QMessageBox::information(this, "result", (A<B));
 }
 
@@ -162,18 +123,11 @@ void MainWindow::on_comparison_clicked()
 void MainWindow::on_palindrome_clicked()
 {
     QString StringA = ui->StringA->text();
-    QStringList ListStringA = StringA.split(" ", QString::SkipEmptyParts);
-    Polynomial A(ListStringA.size());
-    for (int i = 0; i < ListStringA.size(); i++) {
-        A.setCoefficientf(i, ListStringA.at(i).toDouble());
-    }
+    Polynomial A = getData(StringA);
+
 
     QString StringB = ui->StringB->text();
-    QStringList ListStringB = StringB.split(" ", QString::SkipEmptyParts);
-    Polynomial B(ListStringB.size());
-    for (int i = 0; i < ListStringB.size(); i++) {
-        B.setCoefficientf(i, ListStringB.at(i).toDouble());
-    }
+    Polynomial B = getData(StringB);
 
     QMessageBox::information(this, "result", A.palindrome()+'\n'+B.palindrome());
 
