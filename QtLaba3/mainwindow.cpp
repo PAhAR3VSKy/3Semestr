@@ -12,8 +12,16 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap pix1(":/image/Снимок.PNG");
     QPixmap pix2(":/image/Сницмок.PNG");
 
+    QStringList nameOperation = {"Вывод множеств", "Сумма", "Разность", "Умножение", "Деление", "Остаток", "Сравнение", "Палиндром"};
+
     ui->examp1->setPixmap(pix1.scaled(225, 60, Qt::KeepAspectRatio));
     ui->examp2->setPixmap(pix2.scaled(225, 60, Qt::KeepAspectRatio));
+    for (int i = 0; i < nameOperation.size() ; i++) {
+        ui->comboBox->addItem(nameOperation.at(i));
+    }
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -31,104 +39,125 @@ Polynomial getData(QString String)
     return temp;
 }
 
-void MainWindow::on_Show_clicked()
+void ShowWindow(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
+
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", A.show() + '\n' + B.show());
+    QMessageBox::information( nullptr, "result", A.show() + '\n' + B.show());
 
 }
 
 
 
-void MainWindow::on_Sum_clicked()
+void Sum(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
+
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", (A+B).show());
+    QMessageBox::information(nullptr, "result", (A+B).show());
 }
 
-void MainWindow::on_subtraction_clicked()
+void Subtraction(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
+
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-     QMessageBox::information(this, "result", (A-B).show());
+     QMessageBox::information(nullptr, "result", (A-B).show());
 }
 
-void MainWindow::on_mult_clicked()
+void Mult(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", (A*B).show());
+     QMessageBox::information(nullptr, "result", (A*B).show());
 }
 
-void MainWindow::on_division_clicked()
+void Division(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", (A/B).show());
+     QMessageBox::information(nullptr, "result", (A/B).show());
 }
 
-void MainWindow::on_remains_clicked()
+void Remains(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", (A%B).show());
+     QMessageBox::information(nullptr, "result", (A%B).show());
 }
 
-void MainWindow::on_comparison_clicked()
+void Comparison(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", (A<B));
+     QMessageBox::information(nullptr, "result", (A<B));
 }
 
 
 
-void MainWindow::on_palindrome_clicked()
+void Palindrome(QString StringA, QString StringB)
 {
-    QString StringA = ui->StringA->text();
     Polynomial A = getData(StringA);
 
 
-    QString StringB = ui->StringB->text();
+
     Polynomial B = getData(StringB);
 
-    QMessageBox::information(this, "result", A.palindrome()+'\n'+B.palindrome());
+     QMessageBox::information(nullptr, "result", A.palindrome()+'\n'+B.palindrome());
 
+}
+
+void MainWindow::on_Input_clicked()
+{
+    int choice = ui->comboBox->currentIndex();
+    QString StringA = ui->StringA->text();
+    QString StringB = ui->StringB->text();
+    switch (choice) {
+    case 0: ShowWindow(StringA, StringB);
+        break;
+    case 1: Sum(StringA, StringB);
+        break;
+    case 2: Subtraction(StringA, StringB);
+        break;
+    case 3: Mult(StringA, StringB);
+        break;
+    case 4: Division(StringA, StringB);
+        break;
+    case 5: Remains(StringA, StringB);
+        break;
+    case 6: Comparison(StringA, StringB);
+        break;
+    case 7: Palindrome(StringA, StringB);
+        break;
+
+    }
 }

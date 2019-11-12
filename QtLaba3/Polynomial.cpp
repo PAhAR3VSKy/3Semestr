@@ -37,10 +37,7 @@ Polynomial::~Polynomial()
     delete[] coefficient;
 }
 
-void Polynomial::setDegree(int degree)
-{
-    this->degree = degree;
-}
+
 
 void Polynomial::setCoefficientf(int value, double count)
 {
@@ -187,6 +184,15 @@ QString Polynomial::operator<(Polynomial &object)
     else
         resultLine = " Множество " + object.show() + " больше!";
     return resultLine;
+}
+
+Polynomial Polynomial::operator=(const Polynomial &objeect)
+{
+    this->degree = objeect.degree;
+    for (int i = 0;i < degree; i++) {
+        coefficient[i] = objeect.coefficient[i];
+    }
+    return *this;
 }
 
 QString Polynomial::show()

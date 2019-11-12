@@ -1,9 +1,7 @@
 #ifndef POLYNOMIAL_H
 #define POLYNOMIAL_H
 
-#endif // POLYNOMIAL_H
 
-#pragma once
 #include <iostream>
 #include <QString>
 #include <QVariant>
@@ -15,9 +13,7 @@ public:
     Polynomial(int);                            //конструктор с параметрами
     Polynomial(const Polynomial &);             //копирования
     ~Polynomial();                              //деструктор
-    void setDegree(int);
     void setCoefficientf(int, double);
-    void StringToDouble(QString);
     int getDegree();                            //функция получения степени полинома
     double getCoefficientf(int);                //функция получения коэффициента при i-й степени
     QString palindrome();                          //проверка на палиндром
@@ -26,6 +22,7 @@ public:
     Polynomial operator*(const Polynomial &);   // оператор умножения
     Polynomial operator/(const Polynomial &);   // оператор деления
     Polynomial operator%(const Polynomial &);   // оператор остатка от деления
+    Polynomial operator=(const Polynomial &);   // оператор присваивания
     QString show();                             //  функция вывода
     QString operator<( Polynomial &);           // оператор сравнения
 private:
@@ -33,3 +30,4 @@ private:
     double *coefficient;                        //указатель на массив коэффициентов полинома coefficient[i] - коэффициент при i-й степени
 };
 
+#endif // POLYNOMIAL_H

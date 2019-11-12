@@ -19,22 +19,7 @@ public:
 
 private slots:
 
-    void on_Show_clicked();
-
-
-    void on_Sum_clicked();
-
-    void on_subtraction_clicked();
-
-    void on_mult_clicked();
-
-    void on_division_clicked();
-
-    void on_comparison_clicked();
-
-    void on_remains_clicked();
-
-    void on_palindrome_clicked();
+    void on_Input_clicked();
 
 private:
     Ui::MainWindow *ui;

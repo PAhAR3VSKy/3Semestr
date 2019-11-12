@@ -55,7 +55,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Множество А:</string>
+       <string>Коэффициенты полинома А:</string>
       </property>
      </widget>
     </item>
@@ -72,7 +72,7 @@
     <item>
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Множество В:</string>
+       <string>Коэффициенты полинома В:</string>
       </property>
      </widget>
     </item>
@@ -80,64 +80,14 @@
      <widget class="QLineEdit" name="StringB"/>
     </item>
     <item>
+     <widget class="QComboBox" name="comboBox"/>
+    </item>
+    <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="division">
-          <property name="text">
-           <string>Деление</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="remains">
-          <property name="text">
-           <string>Остаток</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="Sum">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="Input">
         <property name="text">
-         <string>Сумма</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="comparison">
-        <property name="text">
-         <string>Сравнение</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="mult">
-        <property name="text">
-         <string>Умножение</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="palindrome">
-        <property name="text">
-         <string>Палиндром</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="subtraction">
-        <property name="text">
-         <string>Вычитание</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QPushButton" name="Show">
-        <property name="text">
-         <string>Вывести многочлены</string>
+         <string>Вывод</string>
         </property>
        </widget>
       </item>
