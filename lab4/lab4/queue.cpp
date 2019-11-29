@@ -7,7 +7,7 @@ inline QueueP<T>::QueueP()
 {
 	count = 0;
 }
-
+// деструктор
 template<typename T>
 QueueP<T>::~QueueP()
 {
@@ -113,7 +113,7 @@ void QueueP<T>::Push(T item, int priority)
 	// 6. Увеличить количество элементов в очереди на 1
 	count++;
 }
-
+// Функция, вытягивающая из очереди первый элемент
 template<typename T>
 T QueueP<T>::Pop()
 {
@@ -182,7 +182,7 @@ int QueueP<T>::Count()
 {
 	return count;
 }
-
+// Функция, выводящая очередь на экран
 template<typename T>
 void QueueP<T>::Print(const char * objName)
 {
