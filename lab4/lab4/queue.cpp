@@ -1,71 +1,195 @@
+#ifndef QUEUE_CPP
+#define QUEUE_CPP
 #include "queue.h"
 
-template<typename T> queue<T>::queue(int sizeQueue) :
-	size(sizeQueue), // инициализация константы
-	begin(0), end(0), elemCT(0)
+template<typename T>
+inline QueueP<T>::QueueP()
 {
-	// дополнительная позици поможет нам различать конец и начало очереди
-	queuePtr = new T[size + 1];
-}
-
-template<typename T> queue<T>::queue(const queue& otherQueue) :
-	size(otherQueue.size), begin(otherQueue.begin),
-	end(otherQueue.end), elemCT(otherQueue.elemCT),
-	queuePtr(new T[size + 1])
-{
-	for (int ix = 0; ix < size; ix++)
-		queuePtr[ix] = otherQueue.queuePtr[ix]; // копируем очередь
+	count = 0;
 }
 
 template<typename T>
-queue<T>::~queue()
+QueueP<T>::~QueueP()
 {
-	delete[] queuePtr;
-}
-
-// функция добавления элемента в очередь
-template<typename T> void queue<T>::enqueue(const T& newElem)
-{
-	// проверяем, ести ли свободное место в очереди
-	assert(elemCT < size);
-
-	// обратите внимание на то, что очередь начинает заполняться с 0 индекса
-	queuePtr[end++] = newElem;
-
-	elemCT++;
-
-	// проверка кругового заполнения очереди
-	if (end > size)
-		end -= size + 1; // возвращаем end на начало очереди
-}
-
-// функция удаления элемента из очереди
-template<typename T> T queue<T>::dequeue()
-{
-	// проверяем, есть ли в очереди элементы
-	assert(elemCT > 0);
-
-	T returnValue = queuePtr[begin++];
-	elemCT--;
-
-	// проверка кругового заполнения очереди
-	if (begin > size)
-		begin -= size + 1; // возвращаем behin на начало очереди
-
-	return returnValue;
-}
-
-template<typename T> void queue<T>::printQueue()
-{
-	cout << "Очередь: ";
-
-	if (end == 0 && begin == 0)
-		cout << " пустая\n";
-	else
+	if (count > 0)
 	{
-		for (int ix = end; ix >= begin; ix--)
-			cout << queuePtr[ix] << " ";
-		cout << endl;
+		delete[] A;
+		delete[] P;
 	}
 }
-//http://cppstudio.com/post/5159/
+
+template<typename T>
+QueueP<T>::QueueP(const QueueP &_Q)
+{
+	try {
+		// попытка выделить память
+		A = new T[_Q.count];
+		P = new int[_Q.count];
+	}
+	catch (bad_alloc e)
+	{
+		// если память не выделилась то обработать ошибку
+		cout << e.what() << endl;
+		count = 0;
+		return;
+	}
+
+	// скопировать _Q => *this
+	count = _Q.count;
+
+	// поэлементное копирование данных
+	for (int i = 0; i < count; i++)
+		A[i] = _Q.A[i];
+
+	for (int i = 0; i < count; i++)
+		P[i] = _Q.P[i];
+}
+
+template<typename T>
+void QueueP<T>::Push(T item, int priority)
+{
+	// 1. Создать новый массив-очередь и массив-приоритет
+	T* A2;
+	int* P2;
+
+	try {
+		// попытка выделить память для нового массива
+		A2 = new T[count + 1];
+		P2 = new int[count + 1];
+	}
+	catch (bad_alloc e)
+	{
+		// если память не выделена, то выход
+		cout << e.what() << endl;
+		return;
+	}
+
+	// 2. Поиск позиции pos в массиве P согласно с приоритетом priority
+	int pos;
+
+	if (count == 0)
+		pos = 0;
+	else
+	{
+		pos = 0;
+		while (pos < count)
+		{
+			if (P[pos] < priority) break;
+			pos++;
+		}
+	}
+
+	// 3. Копирование данных A2<=A; P2<=P
+	// по формуле P = [0,1,...] + pos+1 + [pos+2,pos+3,...]
+	// 3.1. Индексы массива с номерами 0..pos
+	for (int i = 0; i < pos; i++)
+	{
+		A2[i] = A[i];
+		P2[i] = P[i];
+	}
+
+	// 3.2. Добавить элемент в позиции pos
+	A2[pos] = item;
+	P2[pos] = priority;
+
+	// 3.3. Элементы после позиции pos
+	for (int i = pos + 1; i < count + 1; i++)
+	{
+		A2[i] = A[i - 1];
+		P2[i] = P[i - 1];
+	}
+
+	// 4. Освободить память, предварительно выделенную для A и P
+	if (count > 0)
+	{
+		delete[] A;
+		delete[] P;
+	}
+
+	// 5. Перенаправить указатели A->A2, P->P2
+	A = A2;
+	P = P2;
+
+	// 6. Увеличить количество элементов в очереди на 1
+	count++;
+}
+
+template<typename T>
+T QueueP<T>::Pop()
+{
+	// 1. Проверка
+	if (count == 0)
+		return 0;
+
+	// 2. Объявить временные массивы
+	T* A2;
+	int* P2;
+
+	// 3. Попытка выделить память для A2, P2
+	try {
+		A2 = new T[count - 1]; // на 1 элемент меньше
+		P2 = new int[count - 1];
+	}
+	catch (bad_alloc e)
+	{
+		// если память не выделена, то вернуть 0 и выход
+		cout << e.what() << endl;
+		return 0;
+	}
+
+	// 4. Запомнить первый элемент
+	T item;
+	item = A[0];
+
+	// 5. Скопировать данные из массивов A=>A2, P=>P2 без первого элемента
+	for (int i = 0; i < count - 1; i++)
+	{
+		A2[i] = A[i + 1];
+		P2[i] = P[i + 1];
+	}
+
+	// 6. Освободить предварительно выделенную память для A, P
+	if (count > 0)
+	{
+		delete[] A;
+		delete[] P;
+	}
+
+	// 7. Поправить количество элементов в очереди
+	count--;
+
+	// 8. Перенаправить указатели A->A2, P->P2
+	A = A2;
+	P = P2;
+
+	// 9. Вернуть первый элемент очереди
+	return item;
+}
+
+template<typename T>
+void QueueP<T>::Clear()
+{
+	if (count > 0)
+	{
+		delete[] A;
+		delete[] P;
+		count = 0;
+	}
+}
+
+template<typename T>
+int QueueP<T>::Count()
+{
+	return count;
+}
+
+template<typename T>
+void QueueP<T>::Print(const char * objName)
+{
+	cout << "Object: " << objName << endl;
+	for (int i = 0; i < count; i++)
+		cout << A[i] << ":" << P[i] << "\t" << endl;
+	cout << endl;
+	cout << "---------------" << endl;
+}
+#endif 

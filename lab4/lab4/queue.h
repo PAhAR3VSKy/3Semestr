@@ -1,23 +1,29 @@
-#pragma once
+#ifndef QUEUE_H
+#define QUEUE_H
+#include <cassert>
 #include <iostream>
+#include <queue>
 
-template<typename T> class queue
+using namespace std;
+
+template <typename T>
+class QueueP
 {
 private:
-	T* queuePtr;     // указатель на очередь
-	const int size;  // максимальное количество элементов в очереди
-	int begin,       // начало очереди
-		end;         // конец очереди
-	int elemCT;      // счетчик элементов
+	T* A; // динамический массив элементов типа T
+	int* P; // массив приоритетов
+	int count; // количество элементов в очереди
 public:
-	queue(int);					// конструктор по умолчанию
-	queue(const queue<T>&);		// конструктор копирования
-	~queue();					// деструктор
-	void enqueue(const T&);		// добавить элемент в очередь
-	T dequeue();				// удалить элемент из очереди
-	void printQueue();
-
+	QueueP();
+	~QueueP();
+	QueueP(const QueueP&);
+	void Push(T item, int priority);
+	T Pop();
+	void Clear();
+	int Count();
+	void Print(const char* objName);
 };
-
+#include "queue.cpp"
+#endif 
 
 
