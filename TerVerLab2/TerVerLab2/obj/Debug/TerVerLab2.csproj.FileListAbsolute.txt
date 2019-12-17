@@ -1,0 +1,10 @@
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\bin\Debug\TerVerLab2.exe.config
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\bin\Debug\TerVerLab2.exe
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\bin\Debug\TerVerLab2.pdb
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.csprojAssemblyReference.cache
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.Form1.resources
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.Properties.Resources.resources
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.csproj.GenerateResource.cache
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.csproj.CoreCompileInputs.cache
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.exe
+C:\Users\paharevsky\source\repos\TerVerLab2\TerVerLab2\obj\Debug\TerVerLab2.pdb
