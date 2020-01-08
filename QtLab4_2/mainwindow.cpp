@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(&thread, &QThread::started, &_stream, &stream::run);
+    connect(&_stream, &stream::finished, &thread, &QThread::terminate);
+    _stream.moveToThread(&thread);
 
 }
 
@@ -14,8 +17,26 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::update(int interval, bool status)
 {
-    emit sendData(ui->countPlane->value(), ui->interval->value());
+
+}
+
+
+
+
+
+void MainWindow::on_start_clicked()
+{
+    connect(&_stream, &stream::send, this, &MainWindow::update);
+    _stream.setCount(ui->countPlane->value());
+    _stream.setInterval(ui->interval->value());
+    _stream.setRunning(true);
+    thread.start();
+}
+
+
+void MainWindow::on_stop_clicked()
+{
+    _stream.setRunning(false);
 }

@@ -13,6 +13,7 @@ private:
     int count;							// количество элементов в очереди
     int maxLength;						// максимальный размер очереди
 public:
+    QueueP();
     QueueP(int);						// конструктор без параметров
     ~QueueP();							// деструктор
     QueueP(const QueueP&);				// конструктор копирования

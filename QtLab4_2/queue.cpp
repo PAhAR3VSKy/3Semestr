@@ -3,6 +3,12 @@
 #include "queue.h"
 
 template<typename T>
+QueueP<T>::QueueP()
+{
+    count = 0;
+}
+
+template<typename T>
 QueueP<T>::QueueP(int m)
 {
     maxLength = m;			//Получаем размер

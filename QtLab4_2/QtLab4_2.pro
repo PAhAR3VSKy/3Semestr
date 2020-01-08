@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    queue.cpp
+    queue.cpp \
+    stream.cpp
 
 HEADERS += \
     mainwindow.h \
-    queue.h
+    queue.h \
+    stream.h
 
 FORMS += \
     mainwindow.ui

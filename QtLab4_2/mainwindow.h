@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "secondwindow.h"
+#include <QThread>
+#include "stream.h"
+#include "queue.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,14 +18,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
-    void on_pushButton_clicked();
+    void update(int, bool);
+    void on_start_clicked();
+    void on_stop_clicked();
 
 signals:
-    void sendData(int, int);
 
 private:
     Ui::MainWindow *ui;
-    SecondWindow *TwoWindow;
+    QThread thread;
+    stream _stream;
 };
 #endif // MAINWINDOW_H
