@@ -23,12 +23,19 @@ void MainWindow::update(int interval, bool status, int numberPlane, bool UpOrDow
     {
     case 0:
         OutputInfoAdd += "Номер самолета: " + QString::number(numberPlane) + "Время прибытия: " +  QString::number(interval) + '\n';
+        ui->turn->setPlainText(OutputInfoAdd);
         break;
     case 1:
         if(UpOrDown)
+        {
             OutputInfoDel = "Самолет №" + QString::number(numberPlane) + "Успешно прибыл в: " +  QString::number(interval);
+            ui->output->setPlainText(OutputInfoDel);
+        }
         else
+        {
             OutputInfoDel = "Самолет №" + QString::number(numberPlane) + "Успешно покинул в: " +  QString::number(interval);
+            ui->output->setPlainText(OutputInfoDel);
+        }
         break;
 
     }

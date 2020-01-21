@@ -48,7 +48,7 @@ void stream::sortArrayTime(int *arrayTime)
 {
     key = 0;
     temp = 0;
-    for(int i = 0; arrayTime[i]!=0; i++)
+    for(int i = 0; i < m_count; i++)
     {
         key = i + 1;
         temp = arrayTime[key];
@@ -64,10 +64,12 @@ void stream::sortArrayTime(int *arrayTime)
     }
 }
 
-void stream::run()
+void stream::run()// переделать цикл, не работает таймер и каждый самолет первый, сделать цикл правильно
 {
     QueueP<int> Up(m_count);
     QueueP<int> Down(m_count);
+    int numberDown = 1;
+    int numberUp = 1;
     memset(arrayTimeUp, 0, m_count*sizeof (int));
     memset(arrayTimeDown, 0, m_count*sizeof (int));
     timer = 0;
@@ -76,7 +78,7 @@ void stream::run()
         sequence = rand()%2;
         if(sequence)
         {
-            for(int numberUp = 1; numberUp < Up.Count()+1; numberUp++)
+            for( ; numberUp < m_count+1; numberUp++)
             {
                 int fastInterval = rand()%m_interval + timer;
                 if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))
@@ -100,7 +102,7 @@ void stream::run()
         }
         else
         {
-            for(int numberDown = 1; numberDown < Down.Count(); numberDown++)
+            for( ; numberDown < m_count+1; numberDown++)
             {
                 int fastInterval = rand()%m_interval + timer;
                 if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))

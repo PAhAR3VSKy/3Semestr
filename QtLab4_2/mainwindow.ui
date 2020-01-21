@@ -54,6 +54,9 @@
       <item>
        <widget class="QPlainTextEdit" name="turn"/>
       </item>
+      <item>
+       <widget class="QPlainTextEdit" name="output"/>
+      </item>
      </layout>
     </item>
    </layout>

@@ -30,7 +30,7 @@ private:
     Ui::MainWindow *ui;
     QThread thread;
     stream _stream;
-    QStringList OutputInfoAdd;
+    QString OutputInfoAdd;
     QString OutputInfoDel;
 };
 #endif // MAINWINDOW_H
