@@ -20,7 +20,7 @@ public:
 
 
 private slots:
-    void update(int, bool);
+    void update(int, bool, int, bool);
     void on_start_clicked();
     void on_stop_clicked();
 
@@ -30,5 +30,7 @@ private:
     Ui::MainWindow *ui;
     QThread thread;
     stream _stream;
+    QStringList OutputInfoAdd;
+    QString OutputInfoDel;
 };
 #endif // MAINWINDOW_H

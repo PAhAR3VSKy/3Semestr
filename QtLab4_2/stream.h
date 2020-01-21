@@ -6,6 +6,7 @@
 #include <QThread>
 #include "queue.h"
 #include "windows.h"
+#define SIZE_MASS 100
 
 
 class stream:public QObject
@@ -17,12 +18,15 @@ class stream:public QObject
     Q_PROPERTY(int interval READ interval WRITE setInterval NOTIFY intervalChanged)
 public:
     explicit stream(QObject *parent = 0);
+    ~stream();
     bool running() const;
     QString message() const;
     int count() const;
     int interval() const;
 
 public slots:
+    bool checkArray(int *, int *, int);
+    void sortArrayTime(int *);
     void run();
     void setRunning(bool running);
     void setMessage(QString message);
@@ -31,15 +35,18 @@ public slots:
 
 signals:
     void finished();
-    void send(int, bool);
+    void send(int, bool, int, bool);
     void runningChanged(bool running);
     void messageChanged(QString message);
     void countChanged(int count);
     void intervalChanged(int interval);
 
 private:
-    QueueP<int> Up;
-    QueueP<int> Down;
+    int key;
+    int temp;
+    int numberPlane;
+    int *arrayTimeUp;
+    int *arrayTimeDown;
     bool m_running;
     int m_count;
     int m_interval;

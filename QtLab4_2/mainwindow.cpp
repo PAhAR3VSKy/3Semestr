@@ -17,9 +17,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::update(int interval, bool status)
+void MainWindow::update(int interval, bool status, int numberPlane, bool UpOrDown)
 {
+    switch (status)
+    {
+    case 0:
+        OutputInfoAdd += "Номер самолета: " + QString::number(numberPlane) + "Время прибытия: " +  QString::number(interval) + '\n';
+        break;
+    case 1:
+        if(UpOrDown)
+            OutputInfoDel = "Самолет №" + QString::number(numberPlane) + "Успешно прибыл в: " +  QString::number(interval);
+        else
+            OutputInfoDel = "Самолет №" + QString::number(numberPlane) + "Успешно покинул в: " +  QString::number(interval);
+        break;
 
+    }
 }
 
 
