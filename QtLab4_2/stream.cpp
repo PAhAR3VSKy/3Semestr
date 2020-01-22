@@ -46,21 +46,22 @@ bool stream::checkArray(int *Up, int *Down, int interval)
 
 void stream::sortArrayTime(int *arrayTime)
 {
-    key = 0;
-    temp = 0;
+    bool interruptFlag;
     for(int i = 0; i < m_count; i++)
     {
-        key = i + 1;
-        temp = arrayTime[key];
-        for(int j = i + 1; j>0; j--)
+        interruptFlag = true;
+        for(int j = 0 ; j < m_count - i - 1; j++)
         {
-            if(temp<arrayTime[j - 1])
+            if(arrayTime[j] > arrayTime[j+1])
             {
-                arrayTime[j] = arrayTime[j-1];
-                key = j - 1;
+                int temp = arrayTime[j];
+                arrayTime[j] = arrayTime[j+1];
+                arrayTime[j+1] = temp;
+                interruptFlag = false;
             }
         }
-        arrayTime[key] = temp;
+        if(interruptFlag)
+            break;
     }
 }
 
@@ -68,58 +69,74 @@ void stream::run()// переделать цикл, не работает тай
 {
     QueueP<int> Up(m_count);
     QueueP<int> Down(m_count);
-    int numberDown = 1;
-    int numberUp = 1;
-    memset(arrayTimeUp, 0, m_count*sizeof (int));
-    memset(arrayTimeDown, 0, m_count*sizeof (int));
+    int timerCount = 0;
+    int numberUpDown = 1;
+    arrayTimeUp = new int[m_count] {0};
+    arrayTimeDown = new int[m_count] {0};
+    //memset(arrayTimeUp, 1000, m_count*sizeof (int));
+    //memset(arrayTimeDown, 1000, m_count*sizeof (int));
     timer = 0;
-    while(m_running)
+    while(m_running && (!Up.IsFull() || !Down.IsFull()))
     {
         sequence = rand()%2;
         if(sequence)
         {
-            for( ; numberUp < m_count+1; numberUp++)
+            while(!Up.IsFull())
             {
                 int fastInterval = rand()%m_interval + timer;
                 if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))
-                {
-                    numberUp--;
                     break;
-                }
-                arrayTimeUp[timer] = fastInterval;
+                arrayTimeUp[0] = fastInterval;
                 sortArrayTime(arrayTimeUp);
-                Up.Push(numberUp, fastInterval);
-                emit send(fastInterval, 0, numberUp, 0);
-                timer++;
-                if(timer == arrayTimeUp[timer])
+                Up.Push(numberUpDown, fastInterval);
+                emit send(fastInterval, 0, numberUpDown, 0);
+                for(int i = 0; i < timer; i++)
+                {
+                    if(timer == arrayTimeUp[i])
+                    {
+                        numberPlane = Up.Pop();
+                        emit send(timer, 1, numberPlane, 0);
+                    }
+                }
+                /*if((timer == arrayTimeUp[timer]) && (timer != 0))
                 {
                     numberPlane = Up.Pop();
                     emit send(timer, 1, numberPlane, 0);
-                }
+                    timerCount++;
+                }*/
+                timer++;
+                numberUpDown++;
                 Sleep(1000);
                 break;
             }
         }
         else
         {
-            for( ; numberDown < m_count+1; numberDown++)
+            while(!Down.IsFull())
             {
                 int fastInterval = rand()%m_interval + timer;
                 if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))
-                {
-                    numberDown--;
                     break;
-                }
-                arrayTimeDown[timer] = fastInterval;
+                arrayTimeDown[0] = fastInterval;
                 sortArrayTime(arrayTimeDown);
-                Down.Push(numberDown, fastInterval);
-                emit send(fastInterval, 0, numberDown, 1);
-                timer++;
-                if(timer == arrayTimeDown[timer])
+                Down.Push(numberUpDown, fastInterval);
+                emit send(fastInterval, 0, numberUpDown, 1);
+                for(int i = 0; i < timer; i++)
+                {
+                    if(timer == arrayTimeDown[i])
+                    {
+                        numberPlane = Down.Pop();
+                        emit send(timer, 1, numberPlane, 1);
+                    }
+                }
+                /*if((timer == arrayTimeDown[timer]) && (timer != 0))
                 {
                     numberPlane = Down.Pop();
                     emit send(timer, 1, numberPlane, 1);
-                }
+                    timerCount++;
+                }*/
+                timer++;
+                numberUpDown++;
                 Sleep(1000);
                 break;
             }
