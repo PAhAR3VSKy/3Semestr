@@ -63,51 +63,52 @@ void stream::sortArrayTime(int *arrayTime)
         if(interruptFlag)
             break;
     }
+    if(maxTime < arrayTime[m_count-1])
+        maxTime = arrayTime[m_count-1];
+
 }
 
 void stream::run()// переделать цикл, не работает таймер и каждый самолет первый, сделать цикл правильно
 {
     QueueP<int> Up(m_count);
     QueueP<int> Down(m_count);
-    int timerCount = 0;
     int numberUpDown = 1;
     arrayTimeUp = new int[m_count] {0};
     arrayTimeDown = new int[m_count] {0};
-    //memset(arrayTimeUp, 1000, m_count*sizeof (int));
-    //memset(arrayTimeDown, 1000, m_count*sizeof (int));
     timer = 0;
     while(m_running && (!Up.IsFull() || !Down.IsFull()))
     {
         sequence = rand()%2;
         if(sequence)
         {
-            while(!Up.IsFull())
+            if(Up.IsFull() && (timer < maxTime))
             {
-                int fastInterval = rand()%m_interval + timer;
-                if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))
-                    break;
-                arrayTimeUp[0] = fastInterval;
-                sortArrayTime(arrayTimeUp);
-                Up.Push(numberUpDown, fastInterval);
-                emit send(fastInterval, 0, numberUpDown, 0);
-                for(int i = 0; i < timer; i++)
+
+            }
+            else
+            {
+                while(!Up.IsFull())
                 {
-                    if(timer == arrayTimeUp[i])
+                    int fastInterval = rand()%m_interval + timer;
+                    if(!checkArray(arrayTimeUp, arrayTimeDown, fastInterval))
+                        break;
+                    arrayTimeUp[0] = fastInterval;
+                    sortArrayTime(arrayTimeUp);
+                    Up.Push(numberUpDown, fastInterval);
+                    emit send(fastInterval, 0, numberUpDown, 0);
+                    for(int i = 0; i < timer; i++)
                     {
-                        numberPlane = Up.Pop();
-                        emit send(timer, 1, numberPlane, 0);
+                        if(timer == arrayTimeUp[i])
+                        {
+                            numberPlane = Up.Pop();
+                            emit send(timer, 1, numberPlane, 0);
+                        }
                     }
+                    timer++;
+                    numberUpDown++;
+                    Sleep(1000);
+                    break;
                 }
-                /*if((timer == arrayTimeUp[timer]) && (timer != 0))
-                {
-                    numberPlane = Up.Pop();
-                    emit send(timer, 1, numberPlane, 0);
-                    timerCount++;
-                }*/
-                timer++;
-                numberUpDown++;
-                Sleep(1000);
-                break;
             }
         }
         else
@@ -129,12 +130,6 @@ void stream::run()// переделать цикл, не работает тай
                         emit send(timer, 1, numberPlane, 1);
                     }
                 }
-                /*if((timer == arrayTimeDown[timer]) && (timer != 0))
-                {
-                    numberPlane = Down.Pop();
-                    emit send(timer, 1, numberPlane, 1);
-                    timerCount++;
-                }*/
                 timer++;
                 numberUpDown++;
                 Sleep(1000);
@@ -147,11 +142,11 @@ void stream::run()// переделать цикл, не работает тай
 
 
 
-        // если момент появления равный, у одного из самолетов увеличивать время на 1
-        // КОД через m_count создаем очередь определенного размера
-        // m_interval задаем интервал появления самолетов
-        // outFunc передает номер и время прилета самолета
-        // создать статус самолета взлет или посадка
+    // если момент появления равный, у одного из самолетов увеличивать время на 1
+    // КОД через m_count создаем очередь определенного размера
+    // m_interval задаем интервал появления самолетов
+    // outFunc передает номер и время прилета самолета
+    // создать статус самолета взлет или посадка
 
 
 }

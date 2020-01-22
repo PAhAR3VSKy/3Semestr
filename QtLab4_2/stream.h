@@ -42,6 +42,7 @@ signals:
     void intervalChanged(int interval);
 
 private:
+    int maxTime;
     int key;
     int temp;
     int numberPlane;
