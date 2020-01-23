@@ -10,7 +10,8 @@ stream::stream(QObject *parent):
 
 stream::~stream()
 {
-
+    delete [] arrayTimeUp;
+    delete [] arrayTimeDown;
 }
 
 bool stream::running() const
