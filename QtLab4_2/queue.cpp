@@ -92,7 +92,7 @@ T QueueP<T>::Pop()
         }
 
         count--;	//уменьшаем количество
-        return tempP;
+        return tempA;
     }
     else
         return -1;
